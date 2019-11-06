@@ -1,6 +1,7 @@
 package com.legion1900.moxynews.contracts
 
 import android.app.Activity
+import android.os.Parcelable
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
@@ -8,6 +9,9 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 object NewsContract {
+
+    const val KEY_EXTRA_ARTICLE = "Article"
+
     interface NewsfeedView : MvpView {
         @StateStrategyType(AddToEndSingleStrategy::class)
         fun displayNewsfeed(articles: List<Article>)
@@ -17,7 +21,7 @@ object NewsContract {
         * Launches activity to display article. Must be ignored by ViewState queue.
         * */
         @StateStrategyType(SkipStrategy::class)
-        fun <T : Activity> openEntry(activity: Class<T>)
+        fun <T : Activity> openEntry(activity: Class<T>, article: Article)
     }
 
     interface ArticleView : MvpView {
@@ -31,10 +35,6 @@ object NewsContract {
         * articleInd - index of article that was clicked in a List<Article>.
         */
         fun onArticleClick(articleInd: Int)
-        /*
-        * Provides article data for ArticleView.
-        * */
-        fun loadArticle(articleInd: Int)
     }
 
     interface NewsfeedModel {
@@ -57,7 +57,7 @@ object NewsContract {
         val articles: List<Article>
     }
 
-    interface Article {
+    interface Article : Parcelable {
         val author: String
         val title: String
         val publishedAt: String
