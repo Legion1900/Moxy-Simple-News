@@ -22,13 +22,21 @@
     <LinearLayout
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <Spinner
-            android:id="@+id/topics"
-            android:layout_marginStart="@dimen/margin_middle"
-            android:layout_marginEnd="@dimen/margin_middle"
+            android:id="@+id/spinner_topics"
+            android:layout_marginStart="@dimen/middle"
+            android:layout_marginEnd="@dimen/middle"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_news"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/middle"
+            android:paddingEnd="@dimen/middle"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
