@@ -1,10 +1,11 @@
-package com.legion1900.moxynews
+package com.legion1900.moxynews.views.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.legion1900.moxynews.R
 import com.legion1900.moxynews.contracts.NewsContract
 
 class ArticleAdapter(private val listener: View.OnClickListener) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
