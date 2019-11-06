@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        style="@style/RvItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_author"
+            style="@style/RvItemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Cool author" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/RvItemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tv_publishedAt"
+            style="@style/RvItemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="MM-DD-YYYY" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

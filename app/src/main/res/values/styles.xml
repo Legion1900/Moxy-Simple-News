@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RvItemText">
+        <item name="android:layout_marginBottom">@dimen/small</item>
+    </style>
+
+    <style name="RvItem">
+        <item name="android:paddingStart">@dimen/small</item>
+        <item name="android:paddingEnd">@dimen/small</item>
+        <item name="android:paddingTop">@dimen/small</item>
+    </style>
+
 </resources>
