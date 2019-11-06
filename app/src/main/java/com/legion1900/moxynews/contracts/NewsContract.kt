@@ -12,7 +12,7 @@ object NewsContract {
         @StateStrategyType(AddToEndSingleStrategy::class)
         fun displayNewsfeed(articles: List<Article>)
         @StateStrategyType(SkipStrategy::class)
-        fun setProgressBar(enabled: Boolean)
+        fun displayErrorDialog(visible: Boolean)
         /*
         * Launches activity to display article. Must be ignored by ViewState queue.
         * */
