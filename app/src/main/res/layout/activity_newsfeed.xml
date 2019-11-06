@@ -37,7 +37,8 @@
             android:layout_width="match_parent"
             android:paddingStart="@dimen/middle"
             android:paddingEnd="@dimen/middle"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 

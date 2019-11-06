@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.legion1900.moxynews.contracts.NewsContract
 
-class ArticleAdapter(val listener: View.OnClickListener) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+class ArticleAdapter(private val listener: View.OnClickListener) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     private val dataSet = ArrayList<NewsContract.Article>()
 

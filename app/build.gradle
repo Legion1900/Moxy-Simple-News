@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'tech.schoolhelper:moxy-x:1.7.0'
     implementation 'tech.schoolhelper:moxy-x-androidx:1.7.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.5'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
