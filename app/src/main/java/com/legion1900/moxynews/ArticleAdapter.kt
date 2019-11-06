@@ -7,13 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.legion1900.moxynews.contracts.NewsContract
 
-class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+class ArticleAdapter(val listener: View.OnClickListener) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     private val dataSet = ArrayList<NewsContract.Article>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(R.layout.item_rv, parent, false)
+        itemView.setOnClickListener(listener)
         return ArticleViewHolder(itemView)
     }
 
