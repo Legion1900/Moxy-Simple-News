@@ -18,6 +18,8 @@ import com.legion1900.moxynews.views.adapters.ArticleAdapter
 
 class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
 
+//    TODO: implement swipe-refresh layout
+
     companion object {
         const val DIALOG_TAG = BuildConfig.APPLICATION_ID
     }
@@ -36,7 +38,6 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
 
     private val dialogCallback: () -> Unit = {
         presenter.updateNewsfeed((topics.selectedItem as TextView).text.toString())
-        dialog.dismiss()
     }
     private val dialog =
         DialogFactory.buildErrorDialog(R.string.msg_err, R.string.btn_positive, dialogCallback)
@@ -59,8 +60,12 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     }
 
     override fun displayErrorDialog(visible: Boolean) {
-        val manager = supportFragmentManager
-        dialog.show(manager, DIALOG_TAG)
+        if (visible) {
+            val manager = supportFragmentManager
+            dialog.show(manager, DIALOG_TAG)
+        }
+        else if (dialog.showsDialog)
+            dialog.dismiss()
     }
 
     override fun openEntry(activity: Class<*>, article: NewsContract.Article) {

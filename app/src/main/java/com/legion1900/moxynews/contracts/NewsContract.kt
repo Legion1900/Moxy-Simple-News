@@ -17,7 +17,7 @@ object NewsContract {
         @StateStrategyType(AddToEndSingleStrategy::class)
         fun displayNewsfeed(articles: List<Article>)
 
-        @StateStrategyType(SkipStrategy::class)
+        @StateStrategyType(AddToEndSingleStrategy::class)
         fun displayErrorDialog(visible: Boolean)
 
         /*
