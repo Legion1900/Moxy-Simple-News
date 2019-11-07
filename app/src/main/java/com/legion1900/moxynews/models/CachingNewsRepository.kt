@@ -1,8 +1,8 @@
 package com.legion1900.moxynews.models
 
-import com.legion1900.moxynews.BuildConfig.apiKey
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.nework.AsyncExecutor
+import com.legion1900.moxynews.nework.retrofit.NewsService
 import com.legion1900.moxynews.utils.TimeUtils
 import java.util.*
 
@@ -13,26 +13,10 @@ class CachingNewsRepository(
 ) : NewsContract.NewsfeedModel {
 
     private companion object {
-        // TODO: move this to singleton (maybe place those as a companion to NewsService?)
-        private const val KEY_TOPIC = "q"
-        private const val KEY_DATE = "from"
-        private const val KEY_SORT = "sortBy"
-        private const val KEY_API_KEY = "apiKey"
-        const val VALUE_SORT = "publishedAt"
         /*
         * Minimal timeout in milliseconds before reloading data for the same topic.
         * */
         const val TIMEOUT = 60_000
-        const val TIME_FORMAT = "yyyy-mm-dd"
-
-        fun buildQuery(topic: String, date: String): Map<String, String> {
-            val query = HashMap<String, String>()
-            query[KEY_TOPIC] = topic
-            query[KEY_DATE] = date
-            query[KEY_SORT] = VALUE_SORT
-            query[KEY_API_KEY] = apiKey
-            return query
-        }
     }
 
     private var topic: String? = null
@@ -52,7 +36,7 @@ class CachingNewsRepository(
     override fun loadNews(topic: String, date: Date) {
         if (topic != this.topic || isOutdated(date)) {
             timestamp = date
-            startLoading(topic, TimeUtils.dateToFormatStr(date, TIME_FORMAT))
+            startLoading(topic, date)
         } else
             onLoadedCallback(response!!)
     }
@@ -64,9 +48,9 @@ class CachingNewsRepository(
         } ?: true
     }
 
-    private fun startLoading(topic: String, date: String) {
+    private fun startLoading(topic: String, date: Date) {
         onStartCallback()
-        val query = buildQuery(topic, date)
+        val query = NewsService.buildQuery(topic, date)
         executor.execAsync(query)
     }
 }
