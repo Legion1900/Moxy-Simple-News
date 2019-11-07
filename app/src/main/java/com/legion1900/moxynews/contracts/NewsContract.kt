@@ -15,8 +15,8 @@ object NewsContract {
         @StateStrategyType(AddToEndSingleStrategy::class)
         fun displayNewsfeed(articles: List<Article>)
 
-        @StateStrategyType(AddToEndSingleStrategy::class)
-        fun displayErrorDialog(visible: Boolean)
+        @StateStrategyType(SkipStrategy::class)
+        fun displayErrorDialog()
 
         /*
         * Launches activity to display article. Must be ignored by ViewState queue.

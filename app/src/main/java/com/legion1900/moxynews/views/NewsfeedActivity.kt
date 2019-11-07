@@ -2,10 +2,10 @@ package com.legion1900.moxynews.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.legion1900.moxynews.BuildConfig
@@ -28,7 +28,7 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     @InjectPresenter
     lateinit var presenter: NewsPresenter
 
-    private lateinit var dialog: DialogFragment
+    private lateinit var dialogFragment: DialogFragment
 
     private lateinit var topics: Spinner
     private lateinit var rv: RecyclerView
@@ -73,7 +73,7 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     }
 
     private fun initErrorDialog() {
-        dialog = ErrorDialog()
+        dialogFragment = ErrorDialog()
         val args = Bundle()
         args.putInt(ErrorDialog.KEY_MSG, R.string.msg_err)
         args.putInt(ErrorDialog.KEY_TXT, R.string.btn_positive)
@@ -82,19 +82,16 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
                 presenter.updateNewsfeed(topics.selectedItem as String)
             }
         })
-        dialog.arguments = args
+        dialogFragment.arguments = args
     }
 
     override fun displayNewsfeed(articles: List<NewsContract.Article>) {
         adapter.updateData(articles)
     }
 
-    override fun displayErrorDialog(visible: Boolean) {
-        if (visible) {
-            val manager = supportFragmentManager
-            dialog.show(manager, DIALOG_TAG)
-        } /*else if (dialog.showsDialog)
-            dialog.dismiss()*/
+    override fun displayErrorDialog() {
+        val manager = supportFragmentManager
+        dialogFragment.show(manager, DIALOG_TAG)
     }
 
     override fun openEntry(activity: Class<*>, article: NewsContract.Article) {

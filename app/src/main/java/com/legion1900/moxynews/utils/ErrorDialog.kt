@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 
 class ErrorDialog :
     DialogFragment() {
@@ -20,6 +21,8 @@ class ErrorDialog :
     private var btnText = 0
     private lateinit var callback: PositiveCallback
 
+    private var isShowing = false
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         getParams()
         val builder = AlertDialog.Builder(context)
@@ -27,6 +30,8 @@ class ErrorDialog :
             .setPositiveButton(
                 btnText
             ) { _, _ ->
+                isShowing = false
+                dismiss()
                 callback.onPositive()
             }
         return builder.create()
@@ -36,7 +41,7 @@ class ErrorDialog :
         val params = arguments!!
         msg = params.getInt(KEY_MSG)
         btnText = params.getInt(KEY_TXT)
-        callback = params.getParcelable<PositiveCallback>(KEY_CALLBACK)!!
+        callback = params.getParcelable(KEY_CALLBACK)!!
     }
 
     interface PositiveCallback : Parcelable {
@@ -47,5 +52,12 @@ class ErrorDialog :
             * */
         }
         override fun describeContents(): Int = 0
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        if (!isShowing) {
+            isShowing = true
+            super.show(manager, tag)
+        }
     }
 }
