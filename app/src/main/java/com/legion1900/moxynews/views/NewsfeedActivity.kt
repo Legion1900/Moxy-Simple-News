@@ -63,7 +63,7 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
         dialog.show(manager, DIALOG_TAG)
     }
 
-    override fun <T : Activity> openEntry(activity: Class<T>, article: NewsContract.Article) {
+    override fun openEntry(activity: Class<*>, article: NewsContract.Article) {
         val showArticle = Intent(this, activity)
         showArticle.putExtra(NewsContract.KEY_EXTRA_ARTICLE, article)
         startActivity(showArticle)

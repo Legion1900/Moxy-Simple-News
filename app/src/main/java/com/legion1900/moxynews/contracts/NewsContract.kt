@@ -24,7 +24,7 @@ object NewsContract {
         * Launches activity to display article. Must be ignored by ViewState queue.
         * */
         @StateStrategyType(SkipStrategy::class)
-        fun <T : Activity> openEntry(activity: Class<T>, article: Article)
+        fun openEntry(activity: Class<*>, article: Article)
     }
 
     interface ArticleView : MvpView {
@@ -47,12 +47,6 @@ object NewsContract {
         val onStartCallback: () -> Unit
         val onLoadedCallback: (Response) -> Unit
         val onFailureCallback: () -> Unit
-        /*
-        * Properties for caching purpose.
-        * */
-        var topic: String?
-        var timestamp: Date?
-        var response: Response?
         /*
         * Asks to update cached in 'news' property articles.
         * */
