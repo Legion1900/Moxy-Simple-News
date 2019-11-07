@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Executors
 
 class AsyncExecutor(
-    onFailure: () -> Unit,
-    onResponse: (NewsContract.Response) -> Unit
+    onResponse: (NewsContract.Response) -> Unit,
+    onFailure: () -> Unit
 ) {
 
     companion object QueryBuilder {

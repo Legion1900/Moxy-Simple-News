@@ -6,7 +6,7 @@ import com.legion1900.moxynews.nework.AsyncExecutor
 import com.legion1900.moxynews.utils.TimeUtils
 import java.util.*
 
-class NewsRepository(
+class CachingNewsRepository(
     override val onStartCallback: () -> Unit,
     onLoaded: (NewsContract.Response) -> Unit,
     override val onFailureCallback: () -> Unit
@@ -35,16 +35,16 @@ class NewsRepository(
         }
     }
 
-    override var topic: String? = null
-    override var timestamp: Date? = null
-    override var response: NewsContract.Response? = null
+    private var topic: String? = null
+    private var timestamp: Date? = null
+    private var response: NewsContract.Response? = null
 
     override val onLoadedCallback: (NewsContract.Response) -> Unit = {
         response = it
         onLoaded(response!!)
     }
 
-    private val executor = AsyncExecutor(onFailureCallback, onLoadedCallback)
+    private val executor = AsyncExecutor(onLoadedCallback, onFailureCallback)
 
     private val timeUtils = TimeUtils()
 
@@ -56,12 +56,11 @@ class NewsRepository(
             onLoadedCallback(response!!)
     }
 
-    /*
-    * Should not be called if timestamp == null!
-    * */
     private fun isOutdated(newDate: Date): Boolean {
-        val delta = timeUtils.subtract(newDate, timestamp!!)
-        return delta >= TIMEOUT
+        return timestamp?.run {
+            val delta = timeUtils.subtract(newDate, timestamp!!)
+            delta >= TIMEOUT
+        } ?: true
     }
 
     private fun startLoading(topic: String, date: String) {
