@@ -1,4 +1,4 @@
-package com.legion1900.moxynews.utils.dialog
+package com.legion1900.moxynews.utils
 
 import android.app.AlertDialog
 import android.app.Dialog

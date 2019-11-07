@@ -7,6 +7,7 @@ import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import java.util.*
 
 object NewsContract {
 
@@ -15,8 +16,10 @@ object NewsContract {
     interface NewsfeedView : MvpView {
         @StateStrategyType(AddToEndSingleStrategy::class)
         fun displayNewsfeed(articles: List<Article>)
+
         @StateStrategyType(SkipStrategy::class)
         fun displayErrorDialog(visible: Boolean)
+
         /*
         * Launches activity to display article. Must be ignored by ViewState queue.
         * */
@@ -38,12 +41,22 @@ object NewsContract {
     }
 
     interface NewsfeedModel {
-        val topic: String?
-        val news: List<Article>?
+        /*
+        * Async callbacks.
+        * */
+        val onStartCallback: () -> Unit
+        val onLoadedCallback: (Response) -> Unit
+        val onFailureCallback: () -> Unit
+        /*
+        * Properties for caching purpose.
+        * */
+        var topic: String?
+        var timestamp: Date?
+        var response: Response?
         /*
         * Asks to update cached in 'news' property articles.
         * */
-        fun loadNews(topic: String)
+        fun loadNews(topic: String, date: Date)
     }
 
     /*

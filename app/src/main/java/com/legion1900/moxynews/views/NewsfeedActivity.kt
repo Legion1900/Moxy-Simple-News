@@ -9,16 +9,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.legion1900.moxynews.BuildConfig
 import com.legion1900.moxynews.R
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.presenters.NewsPresenter
-import com.legion1900.moxynews.utils.dialog.DialogFactory
+import com.legion1900.moxynews.utils.DialogFactory
 import com.legion1900.moxynews.views.adapters.ArticleAdapter
 
 class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
 
     companion object {
-        const val DIALOG_TAG = "com.legion1900.moxynews"
+        const val DIALOG_TAG = BuildConfig.APPLICATION_ID
     }
 
     @InjectPresenter
