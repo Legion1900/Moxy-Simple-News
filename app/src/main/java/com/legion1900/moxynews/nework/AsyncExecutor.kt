@@ -7,7 +7,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.Executors
 
 class AsyncExecutor(
     onResponse: (NewsContract.Response) -> Unit,
@@ -18,9 +17,8 @@ class AsyncExecutor(
         private const val BASE_URL = "https://newsapi.org"
     }
 
-    private val executor = Executors.newSingleThreadExecutor()
-
     private val service: NewsService
+
     init {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -43,7 +41,6 @@ class AsyncExecutor(
         ) {
             onResponse(response.body()!!)
         }
-
     }
 
     fun execAsync(queryArgs: Map<String, String>) {
