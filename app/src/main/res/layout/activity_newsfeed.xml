@@ -29,6 +29,9 @@
             android:id="@+id/spinner_topics"
             android:layout_marginStart="@dimen/middle"
             android:layout_marginEnd="@dimen/middle"
+            android:layout_marginBottom="@dimen/small"
+            android:paddingTop="@dimen/small"
+            android:paddingBottom="@dimen/small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/topics"/>
