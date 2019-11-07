@@ -13,7 +13,7 @@ class CachingNewsRepository(
 ) : NewsContract.NewsfeedModel {
 
     private companion object {
-        //        TODO: move this to singleton (maybe place those as a companion to NewsService?)
+        // TODO: move this to singleton (maybe place those as a companion to NewsService?)
         private const val KEY_TOPIC = "q"
         private const val KEY_DATE = "from"
         private const val KEY_SORT = "sortBy"
@@ -37,7 +37,8 @@ class CachingNewsRepository(
 
     private var topic: String? = null
     private var timestamp: Date? = null
-    private var response: NewsContract.Response? = null
+    var response: NewsContract.Response? = null
+        private set
 
     override val onLoadedCallback: (NewsContract.Response) -> Unit = {
         response = it
