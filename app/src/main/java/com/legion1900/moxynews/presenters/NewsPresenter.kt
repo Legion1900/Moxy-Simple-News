@@ -1,20 +1,20 @@
 package com.legion1900.moxynews.presenters
 
-import com.arellomobile.mvp.MvpPresenter
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.models.CachingNewsRepository
+import moxy.InjectViewState
+import moxy.MvpPresenter
 import java.util.*
 
+@InjectViewState
 class NewsPresenter : MvpPresenter<NewsContract.NewsfeedView>(), NewsContract.Presenter {
 
-    private val view = viewState
-
-    private val onFailure: () -> Unit = { view.displayErrorDialog(true) }
+    private val onFailure: () -> Unit = { viewState.displayErrorDialog(true) }
     private val onStart: () -> Unit = { /*TODO: call some loading animation from swipe-refresh*/ }
     private val onLoaded: (NewsContract.Response) -> Unit = {
         /*TODO: stop loading animation from swipe-refresh*/
-        view.displayErrorDialog(false)
-        view.displayNewsfeed(it.articles)
+        viewState.displayErrorDialog(false)
+        viewState.displayNewsfeed(it.articles)
     }
 
     private val repo = CachingNewsRepository(

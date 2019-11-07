@@ -1,12 +1,10 @@
 package com.legion1900.moxynews.contracts
 
-import android.app.Activity
 import android.os.Parcelable
-import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
-import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
-import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.SkipStrategy
+import moxy.viewstate.strategy.StateStrategyType
 import java.util.*
 
 object NewsContract {
@@ -25,11 +23,6 @@ object NewsContract {
         * */
         @StateStrategyType(SkipStrategy::class)
         fun openEntry(activity: Class<*>, article: Article)
-    }
-
-    interface ArticleView : MvpView {
-        @StateStrategyType(SingleStateStrategy::class)
-        fun displayArticle(article: Article)
     }
 
     interface Presenter {

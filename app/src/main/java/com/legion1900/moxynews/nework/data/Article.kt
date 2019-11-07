@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.legion1900.moxynews.contracts.NewsContract
 
-class Article(
+data class Article(
     override val author: String,
     override val title: String,
     override val publishedAt: String,

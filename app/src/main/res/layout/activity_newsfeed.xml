@@ -30,7 +30,8 @@
             android:layout_marginStart="@dimen/middle"
             android:layout_marginEnd="@dimen/middle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:entries="@array/topics"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_news"
