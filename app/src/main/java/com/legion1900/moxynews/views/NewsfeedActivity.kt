@@ -6,12 +6,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.legion1900.moxynews.BuildConfig
 import com.legion1900.moxynews.R
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.presenters.NewsPresenter
-import com.legion1900.moxynews.utils.DialogFactory
+import com.legion1900.moxynews.utils.ErrorDialog
 import com.legion1900.moxynews.views.adapters.ArticleAdapter
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
@@ -24,15 +25,10 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
         const val DIALOG_TAG = BuildConfig.APPLICATION_ID
     }
 
-    //    TODO: this one does not inject presenters (at least in kotlin)
     @InjectPresenter
-    internal lateinit var presenter: NewsPresenter
+    lateinit var presenter: NewsPresenter
 
-    private val dialogCallback: () -> Unit = {
-        presenter.updateNewsfeed((topics.selectedItem as TextView).text.toString())
-    }
-    private val dialog =
-        DialogFactory.buildErrorDialog(R.string.msg_err, R.string.btn_positive, dialogCallback)
+    private lateinit var dialog: DialogFragment
 
     private lateinit var topics: Spinner
     private lateinit var rv: RecyclerView
@@ -49,6 +45,7 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
 
         initRecyclerView()
         initSpinner()
+        initErrorDialog()
     }
 
     private fun initRecyclerView() {
@@ -60,9 +57,6 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     private fun initSpinner() {
         topics = findViewById(R.id.spinner_topics)
         topics.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            var falseTrigger = true
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 /*
                 * Nothing to do here.
@@ -70,19 +64,25 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
             }
 
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
-                if (!falseTrigger) {
-                    val topic = (view as TextView).text
-                    presenter.updateNewsfeed(topic.toString())
-                } else
-                    falseTrigger = false
+                val topic = topics.selectedItem as String
+                presenter.updateNewsfeed(topic)
             }
-
         }
+    }
+
+    private fun initErrorDialog() {
+        dialog = ErrorDialog()
+        val args = Bundle()
+        args.putInt(ErrorDialog.KEY_MSG, R.string.msg_err)
+        args.putInt(ErrorDialog.KEY_TXT, R.string.btn_positive)
+        args.putParcelable(ErrorDialog.KEY_CALLBACK, object : ErrorDialog.PositiveCallback {
+            override fun onPositive() {
+                presenter.updateNewsfeed(topics.selectedItem as String)
+            }
+        })
+        dialog.arguments = args
     }
 
     override fun displayNewsfeed(articles: List<NewsContract.Article>) {
@@ -93,8 +93,8 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
         if (visible) {
             val manager = supportFragmentManager
             dialog.show(manager, DIALOG_TAG)
-        } else if (dialog.showsDialog)
-            dialog.dismiss()
+        } /*else if (dialog.showsDialog)
+            dialog.dismiss()*/
     }
 
     override fun openEntry(activity: Class<*>, article: NewsContract.Article) {
