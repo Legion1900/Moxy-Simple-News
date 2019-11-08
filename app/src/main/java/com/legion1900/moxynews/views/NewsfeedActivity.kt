@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.legion1900.moxynews.BuildConfig
 import com.legion1900.moxynews.R
 import com.legion1900.moxynews.contracts.NewsContract
@@ -19,8 +20,6 @@ import moxy.presenter.InjectPresenter
 
 class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
 
-//    TODO: implement swipe-refresh layout
-
     companion object {
         const val DIALOG_TAG = BuildConfig.APPLICATION_ID
     }
@@ -28,9 +27,22 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     @InjectPresenter
     lateinit var presenter: NewsPresenter
 
-    private lateinit var dialogFragment: DialogFragment
+    private val dialogFragment: DialogFragment
+    init {
+        dialogFragment = ErrorDialog()
+        val args = Bundle()
+        args.putInt(ErrorDialog.KEY_MSG, R.string.msg_err)
+        args.putInt(ErrorDialog.KEY_TXT, R.string.btn_positive)
+        args.putParcelable(ErrorDialog.KEY_CALLBACK, object : ErrorDialog.PositiveCallback {
+            override fun onPositive() {
+                requestNews()
+            }
+        })
+        dialogFragment.arguments = args
+    }
 
     private lateinit var topics: Spinner
+    private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var rv: RecyclerView
     private val adapter =
         ArticleAdapter(View.OnClickListener { view ->
@@ -44,14 +56,21 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
         setContentView(R.layout.activity_newsfeed)
 
         initRecyclerView()
+        initSwipeRefresh()
         initSpinner()
-        initErrorDialog()
     }
 
     private fun initRecyclerView() {
         rv = findViewById(R.id.rv_news)
         rv.setHasFixedSize(true)
         rv.adapter = adapter
+    }
+
+    private fun initSwipeRefresh() {
+        swipeRefresh = findViewById(R.id.swipe_refresh)
+        swipeRefresh.setOnRefreshListener {
+            requestNews()
+        }
     }
 
     private fun initSpinner() {
@@ -66,23 +85,14 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
-                val topic = topics.selectedItem as String
-                presenter.updateNewsfeed(topic)
+                requestNews()
             }
         }
     }
 
-    private fun initErrorDialog() {
-        dialogFragment = ErrorDialog()
-        val args = Bundle()
-        args.putInt(ErrorDialog.KEY_MSG, R.string.msg_err)
-        args.putInt(ErrorDialog.KEY_TXT, R.string.btn_positive)
-        args.putParcelable(ErrorDialog.KEY_CALLBACK, object : ErrorDialog.PositiveCallback {
-            override fun onPositive() {
-                presenter.updateNewsfeed(topics.selectedItem as String)
-            }
-        })
-        dialogFragment.arguments = args
+    private fun requestNews() {
+        val topic = topics.selectedItem as String
+        presenter.updateNewsfeed(topic)
     }
 
     override fun displayNewsfeed(articles: List<NewsContract.Article>) {
@@ -92,6 +102,10 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     override fun displayErrorDialog() {
         val manager = supportFragmentManager
         dialogFragment.show(manager, DIALOG_TAG)
+    }
+
+    override fun setLoadingAnimation(isLoading: Boolean) {
+        swipeRefresh.isRefreshing = isLoading
     }
 
     override fun openEntry(activity: Class<*>, article: NewsContract.Article) {

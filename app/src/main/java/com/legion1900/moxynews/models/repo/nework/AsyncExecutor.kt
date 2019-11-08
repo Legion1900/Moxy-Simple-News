@@ -38,7 +38,9 @@ class AsyncExecutor(
             call: Call<com.legion1900.moxynews.models.data.Response>,
             response: Response<com.legion1900.moxynews.models.data.Response>
         ) {
-            onResponse(response.body()!!)
+            val test = response.body()
+//            onResponse(response.body()!!)
+            onResponse(test!!)
         }
     }
 

@@ -18,6 +18,9 @@ object NewsContract {
         @StateStrategyType(SkipStrategy::class)
         fun displayErrorDialog()
 
+        @StateStrategyType(AddToEndSingleStrategy::class)
+        fun setLoadingAnimation(isLoading: Boolean)
+
         /*
         * Launches activity to display article. Must be ignored by ViewState queue.
         * */

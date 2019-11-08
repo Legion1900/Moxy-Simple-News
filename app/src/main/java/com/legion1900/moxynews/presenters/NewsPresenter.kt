@@ -9,10 +9,13 @@ import java.util.*
 @InjectViewState
 class NewsPresenter : MvpPresenter<NewsContract.NewsfeedView>(), NewsContract.Presenter {
 
-    private val onFailure: () -> Unit = { viewState.displayErrorDialog() }
-    private val onStart: () -> Unit = { /*TODO: call some loading animation from swipe-refresh*/ }
+    private val onFailure: () -> Unit = {
+        viewState.setLoadingAnimation(false)
+        viewState.displayErrorDialog()
+    }
+    private val onStart: () -> Unit = { viewState.setLoadingAnimation(true) }
     private val onLoaded: (NewsContract.Response) -> Unit = {
-        /*TODO: stop loading animation from swipe-refresh*/
+        viewState.setLoadingAnimation(false)
         viewState.displayNewsfeed(it.articles)
     }
 
