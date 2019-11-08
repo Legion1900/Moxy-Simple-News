@@ -11,4 +11,7 @@
     <string name="topic_name_politics">Politics</string>
     <string name="title_activity_article">ArticleActivity</string>
     <string name="label_picasso">Loaded with Picasso</string>
+    <string name="author">Author: %1s</string>
+    <string name="title">Title: %1s</string>
+    <string name="source">Source: %1s</string>
 </resources>

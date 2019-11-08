@@ -44,12 +44,12 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     private lateinit var topics: Spinner
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var rv: RecyclerView
-    private val adapter =
-        ArticleAdapter(View.OnClickListener { view ->
+    private lateinit var adapter: ArticleAdapter
+    private val rvClickListener = View.OnClickListener { view ->
             presenter.onArticleClick(
                 rv.getChildAdapterPosition(view)
             )
-        })
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +63,7 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
     private fun initRecyclerView() {
         rv = findViewById(R.id.rv_news)
         rv.setHasFixedSize(true)
+        adapter = ArticleAdapter(rvClickListener, this)
         rv.adapter = adapter
     }
 

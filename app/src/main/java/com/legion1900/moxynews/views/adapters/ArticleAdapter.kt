@@ -1,5 +1,6 @@
 package com.legion1900.moxynews.views.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.legion1900.moxynews.R
 import com.legion1900.moxynews.contracts.NewsContract
 
-class ArticleAdapter(private val listener: View.OnClickListener) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+class ArticleAdapter(private val listener: View.OnClickListener, val context: Context) :
+    RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     private val dataSet = ArrayList<NewsContract.Article>()
 
@@ -23,8 +25,8 @@ class ArticleAdapter(private val listener: View.OnClickListener) : RecyclerView.
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = dataSet[position]
-        holder.author.text = article.author
-        holder.title.text = article.title
+        holder.author.text = context.getString(R.string.author, article.author)
+        holder.title.text = context.getString(R.string.title, article.title)
         holder.publishedAt.text = article.publishedAt
     }
 

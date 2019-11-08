@@ -50,8 +50,8 @@ class ArticleActivity : MvpAppCompatActivity(), NewsContract.ArticleView {
     }
 
     private fun initTextViews(article: NewsContract.Article) {
-        tvTitle.text = article.title
-        tvSource.text = article.sourceName
+        tvTitle.text = getString(R.string.title, article.title)
+        tvSource.text = getString(R.string.source, article.sourceName)
         tvDescription.text = article.description
     }
 
