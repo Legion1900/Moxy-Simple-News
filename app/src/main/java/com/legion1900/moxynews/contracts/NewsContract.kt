@@ -1,6 +1,5 @@
 package com.legion1900.moxynews.contracts
 
-import android.os.Parcelable
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SingleStateStrategy
@@ -75,7 +74,7 @@ object NewsContract {
         val articles: List<Article>
     }
 
-    interface Article : Parcelable {
+    interface Article {
         val author: String?
         val title: String?
         val publishedAt: String?
