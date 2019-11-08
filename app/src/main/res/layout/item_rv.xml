@@ -13,21 +13,21 @@
 
         <TextView
             android:id="@+id/tv_author"
-            style="@style/RvItemText"
+            style="@style/TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Cool author" />
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/RvItemText"
+            style="@style/TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Title" />
 
         <TextView
             android:id="@+id/tv_publishedAt"
-            style="@style/RvItemText"
+            style="@style/TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="MM-DD-YYYY" />
