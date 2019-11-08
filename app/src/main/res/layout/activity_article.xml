@@ -31,45 +31,45 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_label_picasso"
-                style="@style/TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_picasso"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_picasso"
-                style="@style/ArticlePicture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                tools:src="@drawable/ic_image_grey_24dp" />
-
-            <TextView
-                android:id="@+id/tv_label_glide"
-                style="@style/TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_picasso"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_glide"
-                style="@style/ArticlePicture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                tools:src="@drawable/ic_image_grey_24dp" />
-
-            <androidx.constraintlayout.widget.Group
+            <LinearLayout
                 android:id="@+id/group_pictures"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_label_picasso,iv_picasso,tv_label_glide,iv_glide" />
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_label_picasso"
+                    style="@style/TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_picasso"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_picasso"
+                    style="@style/ArticlePicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    tools:src="@drawable/ic_image_grey_24dp" />
+
+                <TextView
+                    android:id="@+id/tv_label_glide"
+                    style="@style/TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_picasso"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_glide"
+                    style="@style/ArticlePicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    tools:src="@drawable/ic_image_grey_24dp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_title"

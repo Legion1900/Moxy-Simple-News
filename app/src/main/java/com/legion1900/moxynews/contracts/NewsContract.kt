@@ -3,13 +3,12 @@ package com.legion1900.moxynews.contracts
 import android.os.Parcelable
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.SingleStateStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import java.util.*
 
 object NewsContract {
-
-    const val KEY_EXTRA_ARTICLE = "Article"
 
     interface NewsfeedView : MvpView {
         @StateStrategyType(AddToEndSingleStrategy::class)
@@ -25,15 +24,24 @@ object NewsContract {
         * Launches activity to display article. Must be ignored by ViewState queue.
         * */
         @StateStrategyType(SkipStrategy::class)
-        fun openEntry(activity: Class<*>, article: Article)
+        fun openEntry(activity: Class<*>)
     }
 
-    interface Presenter {
+    interface ArticleView : MvpView {
+        @StateStrategyType(SingleStateStrategy::class)
+        fun displayArticle(article: Article)
+    }
+
+    interface NewsfeedPresenter {
         fun updateNewsfeed(topic: String)
         /*
         * articleInd - index of article that was clicked in a List<Article>.
         */
         fun onArticleClick(articleInd: Int)
+    }
+
+    interface ArticlePresenter {
+        fun provideData()
     }
 
     interface NewsfeedModel {
@@ -50,6 +58,13 @@ object NewsContract {
     }
 
     /*
+    * Workaround for sharing chosen article from NewsfeedView.
+    * */
+    interface ArticleRepo {
+        var article: Article
+    }
+
+    /*
     * Interfaces that describes data classes.
     * */
 
@@ -61,11 +76,11 @@ object NewsContract {
     }
 
     interface Article : Parcelable {
-        val author: String
-        val title: String
-        val publishedAt: String
-        val sourceName: String
-        val urlToImage: String
-        val description: String
+        val author: String?
+        val title: String?
+        val publishedAt: String?
+        val sourceName: String?
+        val urlToImage: String?
+        val description: String?
     }
 }

@@ -1,13 +1,15 @@
 package com.legion1900.moxynews.presenters
 
 import com.legion1900.moxynews.contracts.NewsContract
+import com.legion1900.moxynews.models.data.SharedArticle
 import com.legion1900.moxynews.models.repo.CachingNewsRepository
+import com.legion1900.moxynews.views.ArticleActivity
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.util.*
 
 @InjectViewState
-class NewsPresenter : MvpPresenter<NewsContract.NewsfeedView>(), NewsContract.Presenter {
+class NewsPresenter : MvpPresenter<NewsContract.NewsfeedView>(), NewsContract.NewsfeedPresenter {
 
     private val onFailure: () -> Unit = {
         viewState.setLoadingAnimation(false)
@@ -30,9 +32,13 @@ class NewsPresenter : MvpPresenter<NewsContract.NewsfeedView>(), NewsContract.Pr
     }
 
     override fun onArticleClick(articleInd: Int) {
-        val article = repo.response!!.articles[articleInd]
-        // TODO: implement ArticleActivity and launch it from here.
+        SharedArticle.article = repo.response!!.articles[articleInd]
+        viewState.openEntry(ARTICLE_ACTIVITY)
     }
 
     private fun getCurrentDate() = Calendar.getInstance().time
+
+    private companion object {
+        val ARTICLE_ACTIVITY = ArticleActivity::class.java
+    }
 }

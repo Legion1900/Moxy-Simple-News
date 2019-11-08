@@ -108,9 +108,8 @@ class NewsfeedActivity : MvpAppCompatActivity(), NewsContract.NewsfeedView {
         swipeRefresh.isRefreshing = isLoading
     }
 
-    override fun openEntry(activity: Class<*>, article: NewsContract.Article) {
+    override fun openEntry(activity: Class<*>) {
         val showArticle = Intent(this, activity)
-        showArticle.putExtra(NewsContract.KEY_EXTRA_ARTICLE, article)
         startActivity(showArticle)
     }
 }
