@@ -8,6 +8,7 @@ import android.os.Parcelable
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 
+// TODO: get object of this class through fabric method (including parameter setting)
 class ErrorDialog :
     DialogFragment() {
 
