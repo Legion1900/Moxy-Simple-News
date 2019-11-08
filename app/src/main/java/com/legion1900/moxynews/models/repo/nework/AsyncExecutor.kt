@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AsyncExecutor(
-    onResponse: (NewsContract.Response) -> Unit,
+    onResponse: (NewsContract.Response?) -> Unit,
     onFailure: () -> Unit
 ) {
 
@@ -38,9 +38,7 @@ class AsyncExecutor(
             call: Call<com.legion1900.moxynews.models.data.Response>,
             response: Response<com.legion1900.moxynews.models.data.Response>
         ) {
-            val test = response.body()
-//            onResponse(response.body()!!)
-            onResponse(test!!)
+            onResponse(response.body())
         }
     }
 

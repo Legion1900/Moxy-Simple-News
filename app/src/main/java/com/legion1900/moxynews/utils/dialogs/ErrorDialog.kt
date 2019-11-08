@@ -1,12 +1,11 @@
-package com.legion1900.moxynews.utils
+package com.legion1900.moxynews.utils.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.legion1900.moxynews.utils.dialogfactory.ErrorDialogFactory
 
 // TODO: get object of this class through fabric method (including parameter setting)
 class ErrorDialog :
@@ -20,7 +19,7 @@ class ErrorDialog :
 
     private var msg = 0
     private var btnText = 0
-    private lateinit var callback: PositiveCallback
+    private lateinit var callback: ErrorDialogFactory.PositiveCallback
 
     private var isShowing = false
 
@@ -43,16 +42,6 @@ class ErrorDialog :
         msg = params.getInt(KEY_MSG)
         btnText = params.getInt(KEY_TXT)
         callback = params.getParcelable(KEY_CALLBACK)!!
-    }
-
-    interface PositiveCallback : Parcelable {
-        fun onPositive()
-        override fun writeToParcel(dest: Parcel?, flags: Int) {
-            /*
-            * Nothing to do here.
-            * */
-        }
-        override fun describeContents(): Int = 0
     }
 
     override fun show(manager: FragmentManager, tag: String?) {
