@@ -7,7 +7,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.legion1900.moxynews.utils.dialogfactory.ErrorDialogFactory
 
-// TODO: get object of this class through fabric method (including parameter setting)
 class ErrorDialog :
     DialogFragment() {
 
