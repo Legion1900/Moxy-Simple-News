@@ -24,9 +24,9 @@ class CachingNewsRepository(
     var response: NewsContract.Response? = null
         private set
 
-    override val onLoadedCallback: (NewsContract.Response) -> Unit = {
+    override val onLoadedCallback: (NewsContract.Response?) -> Unit = {
         response = it
-        onLoaded(response!!)
+        response?.let(onLoaded) ?: onFailureCallback()
     }
 
     private val executor = AsyncExecutor(onLoadedCallback, onFailureCallback)
@@ -38,7 +38,7 @@ class CachingNewsRepository(
             timestamp = date
             startLoading(topic, date)
         } else
-            onLoadedCallback(response!!)
+            onLoadedCallback(response)
     }
 
     private fun isOutdated(newDate: Date): Boolean {
