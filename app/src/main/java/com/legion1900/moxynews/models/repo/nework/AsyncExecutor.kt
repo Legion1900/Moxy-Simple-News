@@ -1,7 +1,6 @@
-package com.legion1900.moxynews.nework
+package com.legion1900.moxynews.models.repo.nework
 
 import com.legion1900.moxynews.contracts.NewsContract
-import com.legion1900.moxynews.nework.retrofit.NewsService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,17 +26,17 @@ class AsyncExecutor(
         service = retrofit.create(NewsService::class.java)
     }
 
-    private val callback = object : Callback<com.legion1900.moxynews.nework.data.Response> {
+    private val callback = object : Callback<com.legion1900.moxynews.models.data.Response> {
         override fun onFailure(
-            call: Call<com.legion1900.moxynews.nework.data.Response>,
+            call: Call<com.legion1900.moxynews.models.data.Response>,
             t: Throwable
         ) {
             onFailure()
         }
 
         override fun onResponse(
-            call: Call<com.legion1900.moxynews.nework.data.Response>,
-            response: Response<com.legion1900.moxynews.nework.data.Response>
+            call: Call<com.legion1900.moxynews.models.data.Response>,
+            response: Response<com.legion1900.moxynews.models.data.Response>
         ) {
             onResponse(response.body()!!)
         }

@@ -1,4 +1,4 @@
-package com.legion1900.moxynews.nework.data
+package com.legion1900.moxynews.models.data
 
 import com.legion1900.moxynews.contracts.NewsContract
 

@@ -1,8 +1,8 @@
-package com.legion1900.moxynews.models
+package com.legion1900.moxynews.models.repo
 
 import com.legion1900.moxynews.contracts.NewsContract
-import com.legion1900.moxynews.nework.AsyncExecutor
-import com.legion1900.moxynews.nework.retrofit.NewsService
+import com.legion1900.moxynews.models.repo.nework.AsyncExecutor
+import com.legion1900.moxynews.models.repo.nework.NewsService
 import com.legion1900.moxynews.utils.TimeUtils
 import java.util.*
 

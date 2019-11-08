@@ -1,7 +1,7 @@
 package com.legion1900.moxynews.presenters
 
 import com.legion1900.moxynews.contracts.NewsContract
-import com.legion1900.moxynews.models.CachingNewsRepository
+import com.legion1900.moxynews.models.repo.CachingNewsRepository
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.util.*
