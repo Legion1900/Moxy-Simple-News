@@ -2,7 +2,6 @@ package com.legion1900.moxynews.model
 
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.models.repo.CachingNewsRepository
-import com.nhaarman.mockitokotlin2.atLeast
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import org.junit.Before
@@ -48,6 +47,8 @@ class CachingNewsRepositoryTest {
         onLoaded = mock()
         onFailure = mock()
         repo = CachingNewsRepository(onStart, onLoaded, onFailure)
+
+        repo.loadNews(topic0, date0)
     }
 
     @Test
@@ -63,9 +64,30 @@ class CachingNewsRepositoryTest {
     }
 
     @Test
-    fun `loadNews should not call onStartCallback when same topic or not enough time passed`() {
+    fun `loadNews should not call onStartCallback when same topic or not enough time has passed`() {
         repo.loadNews(topic0, date0)
-        repo.loadNews(topic0, date0)
-        verify(onStart, times(1)).invoke()
+        verifyLoads(1)
+    }
+
+    @Test
+    fun `loadNews should call onStartCallback when same topic & enough time has passed`() {
+        repo.loadNews(topic0, date1)
+        verifyLoads(2)
+    }
+
+    @Test
+    fun `loadNews should call onStartCallback when different topic & not enough time has passed`() {
+        repo.loadNews(topic1, date0)
+        verifyLoads(2)
+    }
+
+    @Test
+    fun `loadNes should call onStartCallback when different topic & enough time has passed`() {
+        repo.loadNews(topic1, date1)
+        verifyLoads(2)
+    }
+
+    private fun verifyLoads(times: Int) {
+        verify(onStart, times(times)).invoke()
     }
 }
