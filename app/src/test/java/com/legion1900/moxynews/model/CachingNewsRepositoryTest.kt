@@ -2,7 +2,9 @@ package com.legion1900.moxynews.model
 
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.models.repo.CachingNewsRepository
+import com.nhaarman.mockitokotlin2.atLeast
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -10,6 +12,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
+import java.util.*
 
 class CachingNewsRepositoryTest {
 
@@ -24,6 +27,20 @@ class CachingNewsRepositoryTest {
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     private lateinit var repo: CachingNewsRepository
+
+    private val topic0: String
+    private val date0: Date
+    private val topic1: String
+    private val date1: Date
+
+    init {
+        val calendar = Calendar.getInstance()
+        date0 = calendar.time
+        calendar.add(Calendar.MILLISECOND, CachingNewsRepository.TIMEOUT)
+        date1 = calendar.time
+        topic0 = "sport"
+        topic1 = "cinema"
+    }
 
     @Before
     fun onSetup() {
@@ -43,5 +60,12 @@ class CachingNewsRepositoryTest {
     fun onLoadedCallback_nonNullTest() {
         repo.onLoadedCallback(mockResponse)
         verify(onLoaded).invoke(mockResponse)
+    }
+
+    @Test
+    fun `loadNews should not call onStartCallback when same topic or not enough time passed`() {
+        repo.loadNews(topic0, date0)
+        repo.loadNews(topic0, date0)
+        verify(onStart, times(1)).invoke()
     }
 }

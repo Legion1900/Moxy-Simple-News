@@ -12,7 +12,7 @@ class CachingNewsRepository(
     override val onFailureCallback: () -> Unit
 ) : NewsContract.NewsfeedModel {
 
-    private companion object {
+    companion object {
         /*
         * Minimal timeout in milliseconds before reloading data for the same topic.
         * */
@@ -36,6 +36,7 @@ class CachingNewsRepository(
     override fun loadNews(topic: String, date: Date) {
         if (topic != this.topic || isOutdated(date)) {
             timestamp = date
+            this.topic = topic
             startLoading(topic, date)
         } else
             onLoadedCallback(response)
