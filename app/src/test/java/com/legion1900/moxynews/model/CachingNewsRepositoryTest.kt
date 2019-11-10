@@ -2,6 +2,7 @@ package com.legion1900.moxynews.model
 
 import com.legion1900.moxynews.contracts.NewsContract
 import com.legion1900.moxynews.models.repo.CachingNewsRepository
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -12,12 +13,9 @@ import org.mockito.junit.MockitoRule
 
 class CachingNewsRepositoryTest {
 
-    @Mock
-    lateinit var onStart: () -> Unit
-    @Mock
-    lateinit var onLoaded: (NewsContract.Response) -> Unit
-    @Mock
-    lateinit var onFailure: () -> Unit
+    private lateinit var onStart: () -> Unit
+    private lateinit var onLoaded: (NewsContract.Response) -> Unit
+    private lateinit var onFailure: () -> Unit
     @Mock
     lateinit var mockResponse: NewsContract.Response
 
@@ -29,6 +27,9 @@ class CachingNewsRepositoryTest {
 
     @Before
     fun onSetup() {
+        onStart = mock()
+        onLoaded = mock()
+        onFailure = mock()
         repo = CachingNewsRepository(onStart, onLoaded, onFailure)
     }
 
